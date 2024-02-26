@@ -1,179 +1,58 @@
-<html>
-    <head>  
-        <title></title>
-        
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FS Labs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #007bff;
+        }
+        p {
+            text-align: center;
+            font-size: 18px;
+        }
+        a {
+            display: block;
+            text-decoration: none;
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>FS Labs</h1>
+        <p>FS Labs is a collection of labs and exercises for the Full Stack Web Development course.</p>
 
-        <style>
-            .card-container {
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
+        <a href="./1.html">Lab 1</a>
 
-            .card {
-                width: 300px;
-                height: 220px;
-                perspective: 1000px;
-                margin: 20px;
-            }
+        <a href="./2.html">Lab 2</a>
 
-            .card-inner {
-                width: 100%;
-                height:  100%;
-                transition: transform 0.6s;
-                transform-style: preserve-3d;
-            }
+        <a href="./3.html">Lab 3</a>
 
-            .card-front , .card-back {
-                width: 100%;
-                height:  100%;
-                position: absolute;
-                backface-visibility: hidden;
-            }
-
-            .card:hover .card-inner {
-                transform: rotateY(180deg);
-            }
-
-            .card-back {
-                transform: rotateY(180deg);
-            }
-        
-        </style>
-    </head>
-    <body>
-
-
-        <div class="container">
-            <div class="card-container">
-
-
-                <div class="card">
-                    <div class="card-inner">
-                        <div class="card-front">
-                            <img src="luffy.png" class="card-img-top" alt="Front Img">
-                            <div class="card-body">
-                                <h5 class="card-title">Luffy - Gear 5</h5>
-                                <p class="card-text">HD Wallpaper</p>
-                            </div>
-
-                        </div>
-
-                        <div class="card-back">
-                            <img src="tanjiro.jpg" class="card-img-top" alt="Front Img">
-                            <div class="card-body">
-                                <h5 class="card-title">Tanjiro </h5>
-                                <p class="card-text">HD Wallpaper</p>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div class="container">
-            <div class="card-container">
-
-
-                <div class="card">
-                    <div class="card-inner">
-                        <div class="card-front">
-                            <img src="luffy.png" class="card-img-top" alt="Front Img">
-                            <div class="card-body">
-                                <h5 class="card-title">Luffy - Gear 5</h5>
-                                <p class="card-text">HD Wallpaper</p>
-                            </div>
-
-                        </div>
-
-                        <div class="card-back">
-                            <img src="tanjiro.jpg" class="card-img-top" alt="Front Img">
-                            <div class="card-body">
-                                <h5 class="card-title">Tanjiro </h5>
-                                <p class="card-text">HD Wallpaper</p>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="container">
-            <div class="card-container">
-
-
-                <div class="card">
-                    <div class="card-inner">
-                        <div class="card-front">
-                            <img src="luffy.png" class="card-img-top" alt="Front Img">
-                            <div class="card-body">
-                                <h5 class="card-title">Luffy - Gear 5</h5>
-                                <p class="card-text">HD Wallpaper</p>
-                            </div>
-
-                        </div>
-
-                        <div class="card-back">
-                            <img src="tanjiro.jpg" class="card-img-top" alt="Front Img">
-                            <div class="card-body">
-                                <h5 class="card-title">Tanjiro </h5>
-                                <p class="card-text">HD Wallpaper</p>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="container">
-            <div class="card-container">
-
-
-                <div class="card">
-                    <div class="card-inner">
-                        <div class="card-front">
-                            <img src="luffy.png" class="card-img-top" alt="Front Img">
-                            <div class="card-body">
-                                <h5 class="card-title">Luffy - Gear 5</h5>
-                                <p class="card-text">HD Wallpaper</p>
-                            </div>
-
-                        </div>
-
-                        <div class="card-back">
-                            <img src="tanjiro.jpg" class="card-img-top" alt="Front Img">
-                            <div class="card-body">
-                                <h5 class="card-title">Tanjiro </h5>
-                                <p class="card-text">HD Wallpaper</p>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-    </body>
+        <a href="./4.html">Lab 4</a>
+    </div>
+</body>
 </html>
