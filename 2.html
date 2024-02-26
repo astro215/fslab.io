@@ -1,0 +1,125 @@
+<html>
+    <head>
+        <title>Responsive Form - Lab 2</title>
+        
+        <style>
+            body{
+                font-family: Arial, Helvetica, sans-serif;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh ;
+                background-color: #f9f9f9;
+            }
+
+            form{
+                max-width: 600px;
+                width: 100%;
+                background-color: #fff;
+                padding: 20px;
+                box-shadow: 0 0 10px 0 rgba(0,0,0,.5);
+                border-radius: 8px;
+            }
+
+            label{
+                display: block;
+                margin-bottom: 8px;
+                font-weight:bold ;
+            }
+            
+            input,select{
+                width: 80%;
+                padding: 8px;
+                border-radius: 4px;
+                margin-bottom: 5px;    
+                border: 1px solid #ccc;
+                box-sizing: border-box;
+            }
+
+            input[type=submit]{
+                background-color: #45a049;
+                color: white;
+                margin-top: 10px;
+            }
+            input[type=submit]:hover{
+                background-color: green;
+                color: white;
+            }
+
+            input[type=radio]{
+                margin-right: 5px;
+            }
+            
+        
+            .group {
+                display: flex;
+                gap: 10px;
+            }
+
+
+        </style>
+
+
+    </head>
+    <body>
+        
+
+        <form>
+            <center>
+                <h1>Registration Form</h1>
+            </center>
+            
+
+            <label for = "fname">First Name :</label>
+            <input type="text" name = "fname" >
+
+            <label for = "lname">Last Name :</label>
+            <input type="text" name = "lname" >
+
+            <label for = "email">Email Address :</label>
+            <input type="text" name = "email" >
+
+            <label for = "pwd">Password :</label>
+            <input type="password" name = "pwd" >
+
+            <label for = "cpwd">Confirm Password :</label>
+            <input type="password" name = "cpwd" >
+
+            <label for = "date">Date of Birth :</label>
+            <input type="date" name = "date" >
+
+            <label for="gender">Gender:</label>
+            <div class="group">
+                <input type="radio" id="male" name="gender">
+                <label for="male">Male</label>
+    
+                <input type="radio" id="female" name="gender">
+                <label for="female">Female</label>
+    
+                <input type="radio" id="other" name="gender">
+                <label for="other">Other</label>
+            </div>
+
+            
+            <label for = "country">Country :</label>
+            <select name="country" >
+                <option value="India">India</option>
+                <option value="USA">USA</option>
+                <option value="UK">UK</option>
+                <option value="Canada">Canada</option>
+                <option value="Australia">Australia</option>
+                
+
+            </select>
+
+            <label for = "profile">Profile Picture :</label>
+            <input type="file" name = "profile" >
+
+            <input type="submit" value="Register">
+
+        </form> 
+
+
+        
+    </body>
+</html>

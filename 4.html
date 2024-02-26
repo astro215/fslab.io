@@ -1,0 +1,99 @@
+<html>
+    <head>
+        <title>Lab 4</title>
+
+
+        <style>             
+            body {
+                font-family: Arial, sans-serif;
+                display: flex;
+
+            }
+
+            label {
+                font-weight: bold;
+            }
+
+        </style>
+        
+    </head>
+    <body>
+
+        <form id="validationForm">
+            <h1>Form Validation Activation</h1>
+
+            <label for = "mobile"> Mobile Number :</label>
+            <input type="text" name="mobile" id="mobile" placeholder="Enter your mobile number" disabled>
+
+            <br>
+            <br>
+
+            <label for = "email"> Email :</label>
+            <input type="email" name="email" id="email" placeholder="Enter your email address" disabled>
+
+            <br>
+            <br>
+            <br>
+            <br>
+
+            <input type="button" value="Activate Textboxes" onclick="activateTextboxes()" >
+
+
+            
+            <input type="submit" value="Submit" onclick="submitForm(event)">
+
+        </form>
+        
+        <script>
+
+            function activateTextboxes() {
+
+                // Prompt for password
+                var password = prompt('Enter password:');
+                if (password !== '1234') {
+                    alert('Incorrect password!');
+                    return;
+                }
+
+                // Enable textboxes
+
+                document.getElementById('mobile').disabled = false;
+                document.getElementById('email').disabled = false;
+            }
+
+            function submitForm(event) {
+                event.preventDefault(); // Prevent form submission
+
+                var mobileNumber = document.getElementById('mobile').value;
+                var email = document.getElementById('email').value;
+
+                // Check for empty fields
+                if (mobileNumber.trim() === '' || email.trim() === '') {
+                    alert('Mobile number and email are required fields.');
+                    return;
+                }
+
+                var mobileRegex = /^\d{10}$/;
+                var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+                if (!mobileRegex.test(mobileNumber)) {
+                    alert('Mobile number is not correct.');
+                    return;
+                }
+
+
+                // Check for valid email
+                if (!emailRegex.test(email)) {
+                    alert('Email is not correct.\nEmail must be in the format: user@example.com');
+                    return;
+                }
+
+                // If everything is fine, you can submit the form
+                alert('Form submitted successfully!');
+                document.getElementById('validationForm').submit();
+            }
+
+        </script>
+    </body>
+</html>
+
