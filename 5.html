@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 5</title>
+
+    <link rel="stylesheet" type="text/css" href="5_style.css" >
+
+</head>
+<body>
+    <form id="registrationForm" action="#" method="post">
+        
+        <h2>Registration Form</h2>
+        
+        <label for="firstName">First Name:</label><br>
+        <input type="text" id="firstName" name="firstName">
+        
+        <span id="firstNameError"  class="error">
+        </span><br>
+        
+        <label for="lastName">Last Name:</label><br>
+        <input type="text" id="lastName" name="lastName">
+
+        <span id="lastNameError"  class="error">
+        </span><br>
+
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email">
+
+        <span id="emailError"  class="error">
+        </span><br>
+
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password">
+
+        <span id="passwordError"  class="error">
+        </span><br>
+
+        <input type="submit" value="Register">
+    
+
+    </form>
+
+    <script src="5_registration.js"></script>
+
+</body>
+</html>
