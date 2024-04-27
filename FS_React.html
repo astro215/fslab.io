@@ -1,0 +1,205 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Handling APIs in React</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><hr>
+<h2 id="handling-apis-in-react-with-express-and-fastapi">Handling APIs in React with Express and FastAPI</h2>
+<h3 id="introduction">Introduction</h3>
+<p>Welcome to our session on handling APIs in React. Today, we will learn about integrating React with Express and FastAPI to create dynamic web applications.</p>
+<h3 id="table-of-contents">Table of Contents</h3>
+<ol>
+<li><a href="#what-are-apis">What are APIs?</a></li>
+<li><a href="#why-use-apis">Why Use APIs?</a></li>
+<li><a href="#setting-up-the-backend">Setting Up the Backend</a>
+<ul>
+<li><a href="#express-setup">Express Setup</a></li>
+<li><a href="#fastapi-setup">FastAPI Setup</a></li>
+</ul>
+</li>
+<li><a href="#creating-the-react-frontend">Creating the React Frontend</a>
+<ul>
+<li><a href="#react-features-for-api-handling">React Features for API Handling</a></li>
+</ul>
+</li>
+<li><a href="#best-practices-for-api-interaction">Best Practices for API Interaction</a></li>
+<li><a href="#demo-and-testing">Demo and Testing</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ol>
+<hr>
+<h3 id="what-are-apis">What are APIs?</h3>
+<p>API stands for Application Programming Interface. It is a set of rules that allows different software entities to communicate with each other. APIs enable an application to interact with external software components, operating systems, or microservices. They allow your application to access a feature or data from another service, application, or platform without requiring a complete understanding of their implementation.</p>
+<hr>
+<h3 id="why-use-apis">Why Use APIs?</h3>
+<ul>
+<li><strong>Integration and Extension</strong>: APIs are critical in connecting and extending functionalities of different software systems.</li>
+<li><strong>Automation</strong>: They allow for the automation of tasks, enabling systems to communicate and operate with each other without human intervention.</li>
+<li><strong>Efficiency</strong>: Using APIs, developers can leverage existing platform functionalities rather than build from scratch, significantly speeding up the development process.</li>
+<li><strong>Flexibility</strong>: APIs provide the flexibility to build, innovate, and adapt features that can evolve with changing tech landscapes.</li>
+</ul>
+<hr>
+<h3 id="setting-up-the-backend">Setting Up the Backend</h3>
+<h4 id="express-setup">Express Setup</h4>
+<ol>
+<li>
+<p><strong>Installation</strong></p>
+<pre class=" language-bash"><code class="prism  language-bash"><span class="token function">npm</span> init -y
+<span class="token function">npm</span> <span class="token function">install</span> express cors
+</code></pre>
+</li>
+<li>
+<p><strong>Create a Simple Server with CORS</strong></p>
+<pre class=" language-javascript"><code class="prism  language-javascript"><span class="token keyword">const</span> express <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'express'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> cors <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'cors'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> app <span class="token operator">=</span> <span class="token function">express</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+app<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span><span class="token function">cors</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+app<span class="token punctuation">.</span><span class="token keyword">get</span><span class="token punctuation">(</span><span class="token string">'/api/data'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>req<span class="token punctuation">,</span> res<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    res<span class="token punctuation">.</span><span class="token function">json</span><span class="token punctuation">(</span><span class="token punctuation">{</span> message<span class="token punctuation">:</span> <span class="token string">'Hello from Express!'</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> PORT <span class="token operator">=</span> process<span class="token punctuation">.</span>env<span class="token punctuation">.</span>PORT <span class="token operator">||</span> <span class="token number">3000</span><span class="token punctuation">;</span>
+app<span class="token punctuation">.</span><span class="token function">listen</span><span class="token punctuation">(</span>PORT<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token template-string"><span class="token string">`Server running on port </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>PORT<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">`</span></span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+</li>
+</ol>
+<h4 id="fastapi-setup">FastAPI Setup</h4>
+<ol>
+<li>
+<p><strong>Installation</strong></p>
+<pre class=" language-bash"><code class="prism  language-bash">pip <span class="token function">install</span> fastapi uvicorn<span class="token punctuation">[</span>standard<span class="token punctuation">]</span> python-multipart
+</code></pre>
+</li>
+<li>
+<p><strong>Create API Endpoints with CORS</strong></p>
+<pre class=" language-python"><code class="prism  language-python"><span class="token keyword">from</span> fastapi <span class="token keyword">import</span> FastAPI
+<span class="token keyword">from</span> fastapi<span class="token punctuation">.</span>middleware<span class="token punctuation">.</span>cors <span class="token keyword">import</span> CORSMiddleware
+
+app <span class="token operator">=</span> FastAPI<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+app<span class="token punctuation">.</span>add_middleware<span class="token punctuation">(</span>
+    CORSMiddleware<span class="token punctuation">,</span>
+    allow_origins<span class="token operator">=</span><span class="token punctuation">[</span><span class="token string">"*"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    allow_credentials<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span>
+    allow_methods<span class="token operator">=</span><span class="token punctuation">[</span><span class="token string">"*"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    allow_headers<span class="token operator">=</span><span class="token punctuation">[</span><span class="token string">"*"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+<span class="token punctuation">)</span>
+
+@app<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"/api/data"</span><span class="token punctuation">)</span>
+<span class="token keyword">async</span> <span class="token keyword">def</span> <span class="token function">get_data</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> <span class="token punctuation">{</span><span class="token string">"message"</span><span class="token punctuation">:</span> <span class="token string">"Hello from FastAPI!"</span><span class="token punctuation">}</span>
+</code></pre>
+</li>
+<li>
+<p><strong>Running FastAPI Server</strong></p>
+<pre class=" language-bash"><code class="prism  language-bash">uvicorn main:app --reload
+</code></pre>
+</li>
+</ol>
+<hr>
+<h3 id="creating-the-react-frontend">Creating the React Frontend</h3>
+<h4 id="app.js-implementation">App.js Implementation</h4>
+<pre class=" language-javascript"><code class="prism  language-javascript"><span class="token keyword">import</span> React<span class="token punctuation">,</span> <span class="token punctuation">{</span> useState<span class="token punctuation">,</span> useEffect <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'react'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> axios <span class="token keyword">from</span> <span class="token string">'axios'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">function</span> <span class="token function">App</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> <span class="token punctuation">[</span>dataFromExpress<span class="token punctuation">,</span> setDataFromExpress<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">useState</span><span class="token punctuation">(</span><span class="token string">'Loading...'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">const</span> <span class="token punctuation">[</span>dataFromFastAPI<span class="token punctuation">,</span> setDataFromFastAPI<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">useState</span><span class="token punctuation">(</span><span class="token string">'Loading...'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">useEffect</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token comment">// Fetching data using fetch from Express</span>
+        <span class="token function">fetch</span><span class="token punctuation">(</span><span class="token string">'http://localhost:3000/api/data'</span><span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span>response <span class="token operator">=&gt;</span> response<span class="token punctuation">.</span><span class="token function">json</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span>data <span class="token operator">=&gt;</span> <span class="token function">setDataFromExpress</span><span class="token punctuation">(</span>data<span class="token punctuation">.</span>message<span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token keyword">catch</span><span class="token punctuation">(</span>error <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+                console<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token string">'Error fetching data from Express:'</span><span class="token punctuation">,</span> error<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token function">setDataFromExpress</span><span class="token punctuation">(</span><span class="token string">'Failed to load data'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// Fetching data using axios from FastAPI</span>
+        axios<span class="token punctuation">.</span><span class="token keyword">get</span><span class="token punctuation">(</span><span class="token string">'http://localhost:8000/api/data'</span><span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span>response <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+                <span class="token function">setDataFromFastAPI</span><span class="token punctuation">(</span>response<span class="token punctuation">.</span>data<span class="token punctuation">.</span>message<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token keyword">catch</span><span class="token punctuation">(</span>error <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+                console<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token string">'Error fetching data from FastAPI:'</span><span class="token punctuation">,</span> error<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token function">setDataFromFastAPI</span><span class="token punctuation">(</span><span class="token string">'Failed to load data'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> <span class="token punctuation">(</span>
+        <span class="token operator">&lt;</span>div<span class="token operator">&gt;</span>
+            <span class="token operator">&lt;</span>h1<span class="token operator">&gt;</span>React and API Integration Example<span class="token operator">&lt;</span><span class="token operator">/</span>h1<span class="token operator">&gt;</span>
+            <span class="token operator">&lt;</span>h2<span class="token operator">&gt;</span>Data <span class="token keyword">from</span> Express<span class="token punctuation">:</span><span class="token operator">&lt;</span><span class="token operator">/</span>h2<span class="token operator">&gt;</span>
+            <span class="token operator">&lt;</span>p<span class="token operator">&gt;</span><span class="token punctuation">{</span>dataFromExpress<span class="token punctuation">}</span><span class="token operator">&lt;</span><span class="token operator">/</span>p<span class="token operator">&gt;</span>
+            <span class="token operator">&lt;</span>h2<span class="token operator">&gt;</span>Data <span class="token keyword">from</span> FastAPI<span class="token punctuation">:</span><span class="token operator">&lt;</span><span class="token operator">/</span>h2<span class="token operator">&gt;</span>
+            <span class="token operator">&lt;</span>p<span class="token operator">&gt;</span><span class="token punctuation">{</span>dataFromFastAPI<span class="token punctuation">}</span><span class="token operator">&lt;</span><span class="token operator">/</span>p<span class="token operator">&gt;</span>
+        <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> App<span class="token punctuation">;</span>
+</code></pre>
+<h4 id="react-features-for-api-handling">React Features for API Handling</h4>
+<ul>
+<li><strong>useState</strong>: Manages state in functional components.</li>
+<li><strong>useEffect</strong>: Handles side-effects in functional components such as data fetching, subscriptions, or manually changing the DOM.</li>
+<li><strong>useContext</strong>: Provides a way to pass data through the component tree without having to pass props down manually at every level.</li>
+</ul>
+<hr>
+<h4 id="why-axios">Why Axios?</h4>
+<p>Axios is a promise-based HTTP client for the browser and Node.js that provides many features out-of-the-box, making it a powerful tool for API calls:</p>
+<hr>
+<ul>
+<li><strong>Interceptors</strong>: Allows you to alter the request or response entirely before they are handled by <code>.then</code> or <code>.catch</code>. This is particularly useful for authentication, logging, or adding custom headers.</li>
+<li><strong>Automatic JSON transformation</strong>: Automatically transforms JSON data into JavaScript objects and vice versa, simplifying the handling of JSON data.</li>
+<li><strong>Cancellation</strong>: Offers API cancellations through cancel tokens, which can be useful in complex UIs where multiple requests may need to be canceled to prevent unnecessary processing.</li>
+<li><strong>Better error handling</strong>: Provides rich error information including response code, headers, and more, which can be extremely useful for debugging and user feedback.</li>
+<li><strong>Timeouts</strong>: Easily configure how long Axios should wait for a response before aborting the request, preventing user interfaces from being stuck in an indefinite wait state.</li>
+</ul>
+<hr>
+<h3 id="why-use-useeffect-for-api-calls">Why Use <code>useEffect</code> for API Calls?</h3>
+<p>Using <code>useEffect</code> for API calls instead of doing it directly in the component body or other lifecycle methods has several advantages:</p>
+<ul>
+<li><strong>Separation of Concerns</strong>: It keeps the component logic clean and focused on UI rendering and event handling, while side effects are managed separately.</li>
+<li><strong>Handling Asynchronous Operations</strong>: <code>useEffect</code> handles async operations gracefully and ensures that the component updates correctly after data is fetched.</li>
+<li><strong>Avoiding Memory Leaks</strong>: By using cleanup functions and correctly specifying dependencies, <code>useEffect</code> can help avoid memory leaks when the component unmounts or when subsequent effects are run.</li>
+</ul>
+<p>Overall, <code>useEffect</code> provides a declarative approach to managing side effects in functional components, encapsulating behaviors that need to happen at specific times during a component’s lifecycle, such as after it first renders or after it updates.</p>
+<h3 id="best-practices-for-api-interaction">Best Practices for API Interaction</h3>
+<ul>
+<li><strong>Error Handling</strong>: Implement error handling to manage unexpected failures during API calls.</li>
+<li><strong>Loading States</strong>: Maintain UI states for loading data to improve user experience.</li>
+<li><strong>Use Environment Variables</strong>: Store API URLs and other sensitive details in environment variables.</li>
+</ul>
+<hr>
+<h3 id="demo-and-testing">Demo and Testing</h3>
+<p>Live demo of React app fetching data from both Express and FastAPI. Ensure both servers are up and responding to API requests.</p>
+<hr>
+<h3 id="conclusion">Conclusion</h3>
+<p>Today we covered how to set up Express and FastAPI backends with CORS enabled and how to connect them with a React frontend using both Fetch and Axios. We also discussed best practices for API interaction and the advantages of using Axios for API calls.</p>
+<p>Explore the code further on your own!</p>
+<hr>
+<h2 id="author">Author</h2>
+<ul>
+<li>Name - Jainil Patel</li>
+<li>PRN - 21070126039</li>
+<li>Batch - AIML A2</li>
+</ul>
+<hr>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://medium.com/womenintechnology/what-are-the-different-types-of-hooks-in-react-470fdeb86b9">https://medium.com/womenintechnology/what-are-the-different-types-of-hooks-in-react-470fdeb86b9</a></li>
+<li><a href="https://blog.logrocket.com/axios-vs-fetch-best-http-requests/">https://blog.logrocket.com/axios-vs-fetch-best-http-requests/</a></li>
+</ul>
+</div>
+</body>
+
+</html>

@@ -1,0 +1,135 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>express</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h1 id="building-your-first-web-app-with-express.js---a-complete-guide">Building Your First Web App with Express.js - A Complete Guide</h1>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#what-is-expressjs">What is Express.js?</a></li>
+<li><a href="#why-use-expressjs">Why Use Express.js?</a></li>
+<li><a href="#setting-up-your-environment">Setting Up Your Environment</a></li>
+<li><a href="#demo-project-hello-world-app">Demo Project: Hello World App</a></li>
+<li><a href="#expanding-the-application">Expanding the Application</a></li>
+<li><a href="#handling-post-requests">Handling POST Requests</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ol>
+<hr>
+<h2 id="introduction">Introduction</h2>
+<p>Welcome to this Express.js tutorial where we will build a simple web application from scratch. This guide is perfect for those new to Express or looking to solidify their understanding by building a real-world project.</p>
+<h2 id="what-is-express.js">What is Express.js?</h2>
+<p>Express.js is a minimal and flexible Node.js web application framework that provides a robust set of features to develop web and mobile applications efficiently.</p>
+<h2 id="why-use-express.js">Why Use Express.js?</h2>
+<ul>
+<li>Simplifies server creation</li>
+<li>Fast and efficient</li>
+<li>Ideal for building APIs</li>
+<li>Supports a variety of middleware</li>
+</ul>
+<h2 id="setting-up-your-environment">Setting Up Your Environment</h2>
+<p>Before we start coding, ensure you have the following installed:</p>
+<ul>
+<li>Node.js</li>
+<li>A text editor like VS Code</li>
+<li>Terminal access</li>
+</ul>
+<h3 id="initialize-node.js-project">Initialize Node.js Project</h3>
+<p>First, create a new directory for your project and initialize it with npm:</p>
+<pre class=" language-bash"><code class="prism  language-bash"><span class="token function">mkdir</span> myexpressapp
+<span class="token function">cd</span> myexpressapp
+<span class="token function">npm</span> init -y
+</code></pre>
+<p>This command creates a <code>package.json</code> file which will manage all dependencies.</p>
+<h3 id="install-express-and-nodemon">Install Express and Nodemon</h3>
+<p>To install Express, run:</p>
+<pre class=" language-bash"><code class="prism  language-bash"><span class="token function">npm</span> <span class="token function">install</span> express
+</code></pre>
+<p>For development convenience, install <code>nodemon</code>:</p>
+<pre class=" language-bash"><code class="prism  language-bash"><span class="token function">npm</span> <span class="token function">install</span> --save-dev nodemon
+</code></pre>
+<p>Edit <code>package.json</code> to add a start script:</p>
+<pre class=" language-json"><code class="prism  language-json"><span class="token string">"scripts"</span><span class="token punctuation">:</span> <span class="token punctuation">{</span>
+  <span class="token string">"start"</span><span class="token punctuation">:</span> <span class="token string">"nodemon app.js"</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h2 id="demo-project-hello-world-app">Demo Project: Hello World App</h2>
+<h3 id="initial-setup">Initial Setup</h3>
+<p>Create a new file named <code>app.js</code>:</p>
+<pre class=" language-javascript"><code class="prism  language-javascript"><span class="token keyword">const</span> express <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'express'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> app <span class="token operator">=</span> <span class="token function">express</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+app<span class="token punctuation">.</span><span class="token keyword">get</span><span class="token punctuation">(</span><span class="token string">'/'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>req<span class="token punctuation">,</span> res<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  res<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token string">'Hello World!'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> PORT <span class="token operator">=</span> <span class="token number">3000</span><span class="token punctuation">;</span>
+app<span class="token punctuation">.</span><span class="token function">listen</span><span class="token punctuation">(</span>PORT<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token template-string"><span class="token string">`Server is running on http://localhost:</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>PORT<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">`</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h3 id="run-the-server">Run the Server</h3>
+<p>To start the server using nodemon, run:</p>
+<pre class=" language-bash"><code class="prism  language-bash"><span class="token function">npm</span> start
+</code></pre>
+<p>Visit <code>http://localhost:3000</code> in your browser to see the message.</p>
+<h2 id="expanding-the-application">Expanding the Application</h2>
+<h3 id="adding-more-routes">Adding More Routes</h3>
+<p>Add a route for the About page:</p>
+<pre class=" language-javascript"><code class="prism  language-javascript">app<span class="token punctuation">.</span><span class="token keyword">get</span><span class="token punctuation">(</span><span class="token string">'/about'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>req<span class="token punctuation">,</span> res<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  res<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token string">'About Page'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h3 id="using-middleware">Using Middleware</h3>
+<p>Log every request to the console:</p>
+<pre class=" language-javascript"><code class="prism  language-javascript">app<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span><span class="token punctuation">(</span>req<span class="token punctuation">,</span> res<span class="token punctuation">,</span> next<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'Request URL:'</span><span class="token punctuation">,</span> req<span class="token punctuation">.</span>originalUrl<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'Time:'</span><span class="token punctuation">,</span> Date<span class="token punctuation">.</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h2 id="handling-post-requests">Handling POST Requests</h2>
+<h3 id="handling-form-data">Handling Form Data</h3>
+<p>First, enable Express to handle URL-encoded data (form data):</p>
+<pre class=" language-javascript"><code class="prism  language-javascript">app<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>express<span class="token punctuation">.</span><span class="token function">urlencoded</span><span class="token punctuation">(</span><span class="token punctuation">{</span> extended<span class="token punctuation">:</span> <span class="token boolean">true</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>Create a form route and view:</p>
+<pre class=" language-javascript"><code class="prism  language-javascript">app<span class="token punctuation">.</span><span class="token keyword">get</span><span class="token punctuation">(</span><span class="token string">'/form'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>req<span class="token punctuation">,</span> res<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  res<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token string">'&lt;form method="POST" action="/submit-form"&gt;&lt;input type="text" name="username" /&gt;&lt;button type="submit"&gt;Submit&lt;/button&gt;&lt;/form&gt;'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+app<span class="token punctuation">.</span><span class="token function">post</span><span class="token punctuation">(</span><span class="token string">'/submit-form'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>req<span class="token punctuation">,</span> res<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> username <span class="token operator">=</span> req<span class="token punctuation">.</span>body<span class="token punctuation">.</span>username<span class="token punctuation">;</span>
+  res<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token template-string"><span class="token string">`Received submission with username: </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>username<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">`</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h3 id="handling-multi-part-form-data">Handling Multi-part Form Data</h3>
+<p>For handling file uploads, use the <code>multer</code> middleware:</p>
+<pre class=" language-bash"><code class="prism  language-bash"><span class="token function">npm</span> <span class="token function">install</span> multer
+</code></pre>
+<p>Set up multer in your Express app:</p>
+<pre class=" language-javascript"><code class="prism  language-javascript"><span class="token keyword">const</span> multer <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'multer'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> upload <span class="token operator">=</span> <span class="token function">multer</span><span class="token punctuation">(</span><span class="token punctuation">{</span> dest<span class="token punctuation">:</span> <span class="token string">'uploads/'</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+app<span class="token punctuation">.</span><span class="token function">post</span><span class="token punctuation">(</span><span class="token string">'/upload'</span><span class="token punctuation">,</span> upload<span class="token punctuation">.</span><span class="token function">single</span><span class="token punctuation">(</span><span class="token string">'file'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>req<span class="token punctuation">,</span> res<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  res<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token string">'File uploaded successfully.'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h2 id="conclusion">Conclusion</h2>
+<p>We’ve covered the basics of setting up an Express.js application, adding routes, handling different types of data, and working with files. Expand upon this foundation by integrating databases, adding authentication, and more.</p>
+<h2 id="author">Author</h2>
+<ul>
+<li>Name - Jainil Patel</li>
+<li>PRN - 21070126039</li>
+<li>Batch - AIML A2</li>
+</ul>
+</div>
+</body>
+
+</html>

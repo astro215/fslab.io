@@ -1,0 +1,180 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>mongo</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h1 id="schema-and-schema-less-documents-in-mongodb">Schema and Schema-less Documents in MongoDB</h1>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#what-is-mongodb">What is MongoDB?</a></li>
+<li><a href="#schema-vs-schema-less-design">Schema vs. Schema-less Design</a></li>
+<li><a href="#demo-setup">Demo Setup</a></li>
+<li><a href="#schema-model-coding-demo">Schema Model Coding Demo</a></li>
+<li><a href="#schema-less-model-coding-demo">Schema-less Model Coding Demo</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul>
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li>Node</li>
+<li>JavaScript</li>
+<li>Mongo DB</li>
+</ul>
+<h2 id="introduction">Introduction</h2>
+<p>Welcome to our detailed exploration of MongoDB, focusing on the concepts of schema and schema-less data structures. This presentation will guide you through the basics of MongoDB, demonstrate the implementation of both data approaches, and discuss their advantages and disadvantages.</p>
+<hr>
+<h2 id="what-is-mongodb">What is MongoDB?</h2>
+<p>MongoDB is a document-oriented NoSQL database used for high volume data storage. Unlike relational databases that use tables and rows, MongoDB uses collections and documents.</p>
+<h3 id="key-features">Key Features:</h3>
+<ul>
+<li><strong>Document Oriented</strong>: Stores data in JSON-like documents.</li>
+<li><strong>Schema-less Nature</strong>: Offers flexibility to handle diverse and evolving data formats.</li>
+<li><strong>Scalability</strong>: Designed to handle large data sets and heavy load.</li>
+</ul>
+<hr>
+<h2 id="schema-vs.-schema-less-design">Schema vs. Schema-less Design</h2>
+<h3 id="what-is-a-schema">What is a Schema?</h3>
+<p>In MongoDB, a schema represents the structure of data within documents of a collection. Although MongoDB is schema-less by nature, frameworks like Mongoose allow developers to impose a schema at the application level. This means defining what kind of data fields (and their types) documents can contain, along with validation rules and default values.</p>
+<h3 id="why-use-a-schema">Why Use a Schema?</h3>
+<ul>
+<li><strong>Data Consistency</strong>: Ensures all documents in a collection adhere to a predefined structure, making data easier to understand and manage.</li>
+<li><strong>Validation</strong>: Enforces rules on the data being stored, which can prevent corrupt data or formatting errors from entering your database.</li>
+<li><strong>Ease of Maintenance</strong>: With a clear structure, new developers or tools can quickly understand and interact with the data without needing to dig through individual records to determine what fields might exist.</li>
+</ul>
+<h3 id="schema-example">Schema Example:</h3>
+<p>In a blogging application, a post might always need a title, content, and author. Using a schema ensures that every post meets these requirements:</p>
+<pre class=" language-javascript"><code class="prism  language-javascript"><span class="token keyword">const</span> postSchema <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">mongoose<span class="token punctuation">.</span>Schema</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    title<span class="token punctuation">:</span> <span class="token punctuation">{</span> type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> required<span class="token punctuation">:</span> <span class="token boolean">true</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    content<span class="token punctuation">:</span> <span class="token punctuation">{</span> type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> required<span class="token punctuation">:</span> <span class="token boolean">true</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    author<span class="token punctuation">:</span> <span class="token punctuation">{</span> type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> required<span class="token punctuation">:</span> <span class="token boolean">true</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    createdAt<span class="token punctuation">:</span> <span class="token punctuation">{</span> type<span class="token punctuation">:</span> Date<span class="token punctuation">,</span> <span class="token keyword">default</span><span class="token punctuation">:</span> Date<span class="token punctuation">.</span>now <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h3 id="what-is-schema-less">What is Schema-less?</h3>
+<p>Schema-less databases, like MongoDB, store documents in a collection without requiring a uniform structure. Each document can have different fields. The absence of a schema allows documents to be more flexible and dynamic.</p>
+<h3 id="why-use-schema-less">Why Use Schema-less?</h3>
+<ul>
+<li><strong>Flexibility</strong>: Easily adapt to changes in your application’s data needs without needing to modify a centralized database schema.</li>
+<li><strong>Rapid Development</strong>: Quicker iteration and deployment of new features since developers can store data without waiting for schema updates.</li>
+<li><strong>Heterogeneous Data</strong>: Ideal for situations where data structure can vary widely or is unknown at the time of database design.</li>
+</ul>
+<h3 id="schema-less-example">Schema-less Example:</h3>
+<p>In the same blogging application, suppose you decide to allow users to add customized fields to their profiles, such as hobbies or skills:</p>
+<pre class=" language-javascript"><code class="prism  language-javascript"><span class="token keyword">const</span> userProfile <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">mongoose<span class="token punctuation">.</span>Schema</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> strict<span class="token punctuation">:</span> <span class="token boolean">false</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> UserProfile <span class="token operator">=</span> mongoose<span class="token punctuation">.</span><span class="token function">model</span><span class="token punctuation">(</span><span class="token string">'UserProfile'</span><span class="token punctuation">,</span> userProfile<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> newUserProfile <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">UserProfile</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    name<span class="token punctuation">:</span> <span class="token string">'Alice'</span><span class="token punctuation">,</span>
+    hobbies<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">'Reading'</span><span class="token punctuation">,</span> <span class="token string">'Hiking'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    skills<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+        writing<span class="token punctuation">:</span> <span class="token string">'Advanced'</span><span class="token punctuation">,</span>
+        coding<span class="token punctuation">:</span> <span class="token string">'Beginner'</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>This approach lets each user document hold different data according to the users’ choices.</p>
+<hr>
+<h2 id="when-to-use-schema-vs.-schema-less-design">When to Use Schema vs. Schema-less Design</h2>
+<p>Choosing between schema and schema-less should be guided by the specific requirements of your application and the nature of the data it handles.</p>
+<h3 id="consider-using-a-schema-when">Consider Using a Schema When:</h3>
+<ul>
+<li>You have well-defined data structures that are unlikely to change frequently.</li>
+<li>Data integrity and consistency are critical for the application’s functionality.</li>
+<li>You are dealing with a large scale application where the overhead of validating data structures in application code could be problematic.</li>
+</ul>
+<h3 id="consider-using-schema-less-when">Consider Using Schema-less When:</h3>
+<ul>
+<li>Your application needs to handle a variety of data types or the structure of data is dynamic.</li>
+<li>You are prototyping an application and are unsure of the final data structure.</li>
+<li>The application requires the flexibility to store data from different sources that might not follow the same structure.</li>
+</ul>
+<h2 id="demo-setup">Demo Setup</h2>
+<p>First, let’s set up a basic Node.js application to use MongoDB and Mongoose.</p>
+<h3 id="installation-commands">Installation Commands:</h3>
+<pre class=" language-bash"><code class="prism  language-bash"><span class="token function">mkdir</span> mongodb-demo
+<span class="token function">cd</span> mongodb-demo
+<span class="token function">npm</span> init -y
+<span class="token function">npm</span> <span class="token function">install</span> mongoose
+</code></pre>
+<h3 id="connect-to-mongodb">Connect to MongoDB:</h3>
+<p>Create a <code>connect.js</code> file to establish a MongoDB connection via Mongoose.</p>
+<pre class=" language-javascript"><code class="prism  language-javascript"><span class="token keyword">const</span> mongoose <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'mongoose'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+mongoose<span class="token punctuation">.</span><span class="token function">connect</span><span class="token punctuation">(</span><span class="token string">'mongodb://localhost:27017/mydatabase'</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'connected to database'</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token keyword">catch</span><span class="token punctuation">(</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span> 
+
+</code></pre>
+<hr>
+<h2 id="schema-model-coding-demo">Schema Model Coding Demo</h2>
+<p>Let’s define a schema model for a user collection using Mongoose.</p>
+<h3 id="user-schema-definition">User Schema Definition:</h3>
+<pre class=" language-javascript"><code class="prism  language-javascript"><span class="token keyword">const</span> userSchema <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">mongoose<span class="token punctuation">.</span>Schema</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    name<span class="token punctuation">:</span> String<span class="token punctuation">,</span>
+    age<span class="token punctuation">:</span> Number<span class="token punctuation">,</span>
+    email<span class="token punctuation">:</span> <span class="token punctuation">{</span> type<span class="token punctuation">:</span> String<span class="token punctuation">,</span> required<span class="token punctuation">:</span> <span class="token boolean">true</span> <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> User <span class="token operator">=</span> mongoose<span class="token punctuation">.</span><span class="token function">model</span><span class="token punctuation">(</span><span class="token string">'User'</span><span class="token punctuation">,</span> userSchema<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> newUser <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">User</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    name<span class="token punctuation">:</span> <span class="token string">'John Doe'</span><span class="token punctuation">,</span>
+    age<span class="token punctuation">:</span> <span class="token number">30</span><span class="token punctuation">,</span>
+    email<span class="token punctuation">:</span> <span class="token string">'johndoe@example.com'</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+newUser<span class="token punctuation">.</span><span class="token function">save</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span>doc  <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+	console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'Document saved:'</span><span class="token punctuation">,</span> doc<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token keyword">catch</span><span class="token punctuation">(</span>err  <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+	console<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token string">'Error saving document:'</span><span class="token punctuation">,</span> err<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<hr>
+<h2 id="schema-less-model-coding-demo">Schema-less Model Coding Demo</h2>
+<p>Now, let’s demonstrate inserting a document that does not strictly adhere to a predefined schema.</p>
+<h3 id="schema-less-user-model">Schema-less User Model:</h3>
+<pre class=" language-javascript"><code class="prism  language-javascript"><span class="token keyword">const</span> userSchemaless <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">mongoose<span class="token punctuation">.</span>Schema</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> strict<span class="token punctuation">:</span> <span class="token boolean">false</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> UserSchemaless <span class="token operator">=</span> mongoose<span class="token punctuation">.</span><span class="token function">model</span><span class="token punctuation">(</span><span class="token string">'UserSchemaless'</span><span class="token punctuation">,</span> userSchemaless<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> newUser <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">UserSchemaless</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    name<span class="token punctuation">:</span> <span class="token string">'John'</span><span class="token punctuation">,</span>
+    hobby<span class="token punctuation">:</span> <span class="token string">'Fishing'</span> <span class="token comment">// Not defined in any schema</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+newUser<span class="token punctuation">.</span><span class="token function">save</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span>doc <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'Document saved:'</span><span class="token punctuation">,</span> doc<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token keyword">catch</span><span class="token punctuation">(</span>err <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token string">'Error saving document:'</span><span class="token punctuation">,</span> err<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<hr>
+<h2 id="conclusion">Conclusion</h2>
+<p>Today, we explored MongoDB’s flexible data handling through schema and schema-less designs. Each approach offers unique benefits and challenges, making MongoDB a versatile choice for developers dealing with diverse and evolving data sets.</p>
+<hr>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://medium.com/@musasazib/mongoose-discusses-schema-and-model-work-81c5b4b73975">https://medium.com/@musasazib/mongoose-discusses-schema-and-model-work-81c5b4b73975</a></li>
+<li><a href="https://www.scaler.com/topics/mongoose-vs-mongodb/">https://www.scaler.com/topics/mongoose-vs-mongodb/</a></li>
+<li><a href="https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-windows/#std-label-install-mdb-community-windows">https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-windows/#std-label-install-mdb-community-windows</a></li>
+<li><a href="https://www.mongodb.com/docs/atlas/getting-started/#go-further-with-service">https://www.mongodb.com/docs/atlas/getting-started/#go-further-with-service</a></li>
+<li><a href="https://www.mongodb.com/docs/compass/current/query/queries/">https://www.mongodb.com/docs/compass/current/query/queries/</a></li>
+</ul>
+<h2 id="author">Author</h2>
+<ul>
+<li>Name - Jainil Patel</li>
+<li>PRN - 21070126039</li>
+<li>Batch - AIML A2</li>
+</ul>
+</div>
+</body>
+
+</html>
